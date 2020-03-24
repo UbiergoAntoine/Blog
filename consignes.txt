@@ -1,0 +1,16 @@
+1) Blog partie ajout et affichage en MVP
+2) Etre authentifier (classe User) pour pouvoir ajouter un article,
+mais tout le monde peut voir les articles
+3) Seuls les propriétaires des articles peuvent supprimer ou modifier les articles
+4) Vérifier toutes les failles de sécurité
+
+
+********************** A FAIRE *******************************************
+
+Faut modifier tout ça pour faire des classes et des vues je crois
+En tout cas la BDD et le user sont déjà fonctionnel pour moi
+
+
+
+
+==> Note ici les consignes que t'as noté quand il les a donné

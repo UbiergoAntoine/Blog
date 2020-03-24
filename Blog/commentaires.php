@@ -58,7 +58,6 @@ while ($donnees = $req->fetch())
 $req->closeCursor();
 ?>
 
-
 <form id="blogForm" action="blog.php" method="post" enctype="multipart/form-data">
         <p>
                 Formulaire d'envoi de fichier :<br />
