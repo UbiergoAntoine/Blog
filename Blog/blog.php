@@ -12,10 +12,10 @@ $infoUser = $_SESSION["auth"];
 </head>
 <body>
     <h1>Blog</h1>
+    <h3>Bienvenue sur mon blog</h3>
     <hr>
     <h3>Bienvenue <?php echo $infoUser[0]["Nom"] . " " . $infoUser[0]["Prenom"] ?></h3>
     <h3>Le <?php $dt = new DateTime(); echo $dt->format('d-m-Y H:i:s');  ?></h3>
-    <p>Bienvenue sur mon blog</p>
     <?php
 
         // $handle = opendir(dirname(realpath(__FILE__)).'/photos/');
@@ -26,7 +26,7 @@ $infoUser = $_SESSION["auth"];
         //     echo '<img src="photos/'.$file.'" border="0" />';
         //     echo "<p>".$imgInfo[0]["commentaire"]."</p>";
         //     echo "<hr><br>";
-            
+
         //   }
         // }
         // function getInfoImage($filename) {
@@ -43,7 +43,7 @@ $infoUser = $_SESSION["auth"];
         //     $sql = "SELECT * FROM galerie WHERE filename = ?";
 
         //     $stmt = $conn->prepare($sql);
-            
+
         //     $stmt -> bindParam(1, $filename, PDO::PARAM_STR);
 
         //     $stmt -> execute();
@@ -52,9 +52,9 @@ $infoUser = $_SESSION["auth"];
         //         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         //     }
         //     else{
-                
+
         //         $result = false;
-                
+
         //     }
         //     return $result;
         // }
@@ -67,8 +67,8 @@ $infoUser = $_SESSION["auth"];
                 echo "<hr><br>";
             }
         }
-        
-        
+
+
     <a href="formulaire.php">Retour à la page d'insertion</a>
 </body>
 </html>

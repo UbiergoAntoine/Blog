@@ -3,7 +3,6 @@ session_start();
 require('./models/model.php');
 class Controller {
     public $model;
-
     public function __construct() {
         $this->model = new Model();
     }
@@ -17,12 +16,16 @@ class Controller {
             $_SESSION["userVerified"] = false;
             return false;
         }
-
     }
 
     public function listPosts() {
         $posts = $this->model->getArticles();
         require('./views/listArticlesView.php');
+    }
+
+    public function listPostsByUser($id_user) {
+        $posts = $this->model->getArticleByUser($id_user);
+        require('./views/listArticlesByUserView.php');
     }
 
     public function post() {
@@ -40,9 +43,7 @@ class Controller {
         if ($_SERVER["SERVER_PORT"] != "80") {
             $pageURL .= ":".$_SERVER["SERVER_PORT"];
         }
-
         $pageURL .= $_SERVER["REQUEST_URI"];
-
 
         if (strlen($_SERVER["QUERY_STRING"]) > 0) {
             $pageURL = rtrim(substr($pageURL, 0, -strlen($_SERVER["QUERY_STRING"])), '?');
@@ -56,7 +57,19 @@ class Controller {
         if (sizeof($query) > 0) {
             $pageURL .= '?' . http_build_query($query);
         }
-
         return $pageURL;
     }
+
+    function addArticle($filename, $comm, $titre, $id_user) {
+        $affectedLines = InsertImage($filename, $comm, $titre, $id_user);
+        if ($affectedLines === false) {
+            die('Impossible d\'ajouter l\'article !');
+        }
+        else {
+            header('Location: index.php?action=post&id=' . $postId);
+        }
+    }
+
+
+
 }

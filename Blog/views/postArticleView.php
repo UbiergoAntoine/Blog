@@ -4,9 +4,8 @@
     <head>
         <meta charset="utf-8" />
         <title>Mon blog</title>
-        <link href="style.css" rel="stylesheet" /> 
     </head>
-        
+
     <body>
         <form class="login-space" method="POST" action="index.php">
             <label for="login">E-Mail : </label>

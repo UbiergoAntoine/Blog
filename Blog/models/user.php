@@ -31,7 +31,7 @@ class User{
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         else{
-            $response['response'] = 'OK';
+            $response['response'] = 'KO';
         }
 
         return $response;
