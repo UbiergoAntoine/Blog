@@ -37,10 +37,16 @@ if($userVerified != false && $_SESSION["userVerified"] == true) {
                     echo 'Erreur : aucun identifiant de billet envoyé';
                 }
             break;
-            case "addArticle":
+            case "viewListArticlesByUser":
+                echo "HUFEHFHEU";
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                $controllers->listPostsByUser($_GET['id']);
+                }
+            break;
+            case "saveArticle":
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
                     if (!empty($_POST['author']) && !empty($_POST['comment'])) {
-                        addComment($_GET['id'], $_POST['author'], $_POST['comment']);
+                        addArticle($_GET['id'], $_POST['author'], $_POST['comment']);
                     }
                     else {
                         echo 'Erreur : tous les champs ne sont pas remplis !';
@@ -64,4 +70,3 @@ if($userVerified != false && $_SESSION["userVerified"] == true) {
         unset($_GET['action']);
     }
 }
-    

@@ -6,7 +6,6 @@ if(isset($_GET['url'])){
 //     if($user["response"] == "OK"){
 var_dump($_SESSION["userVerified"]);
 if(isset($reslt) && $reslt != false && $reslt["response"] == "OK" && $_SESSION["userVerified"] == true) {
-    
 var_dump($_SESSION["userVerified"]);
     if (isset($_GET['action'])) {
         switch($_GET['action']){
@@ -92,7 +91,7 @@ var_dump($_SESSION["userVerified"]);
 //     $sql = "SELECT * FROM Personne WHERE Email = ? AND MotDePasse = ?";
 
 //     $stmt = $conn->prepare($sql);
-    
+
 //     $stmt -> bindParam(1, $_POST["login"], PDO::PARAM_STR);
 //     $stmt -> bindParam(2, md5($_POST["password"]), PDO::PARAM_STR);
 
@@ -102,9 +101,9 @@ var_dump($_SESSION["userVerified"]);
 //         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //     }
 //     else{
-        
+
 //         $result = false;
-        
+
 //     }
 //     if($result != false){
 //         $_SESSION["auth"] = $result;

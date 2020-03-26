@@ -11,7 +11,7 @@ if(isset($_POST["submit"])) {
         $uploadOk = 1;
     }
     if ($uploadOk == 0) {
-        echo "Votre fichier ne peut être uploader.";
+        echo "Votre fichier ne peut être uploadé.";
     } else {
         echo "\n Aucune erreur dans le transfert du fichier. <br>";
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {

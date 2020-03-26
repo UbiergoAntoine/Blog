@@ -34,27 +34,27 @@ class Model {
         return -999;
     }
 
-    public function loginUser($email, $password){    
+    public function loginUser($email, $password){
         $conn = $this->getConnection();
 
         $response['response'] = 'OK';
-        $sql= "SELECT * FROM personne WHERE Email LIKE :email AND MotDePasse LIKE :password;"; 
-        
+        $sql= "SELECT * FROM personne WHERE Email LIKE :email AND MotDePasse LIKE :password;";
+
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR); 
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
-        
+
         $stmt->execute();
-        
+
         if($stmt->rowCount() == 1){
             $response['data'] = $stmt->fetch(PDO::FETCH_ASSOC);
         }
         else{
             $response['response'] = 'KO';
         }
-        
+
         return $response;
-        
+
     }
   
     function InsertImage($fileName, $commentaire, $title) {
@@ -81,29 +81,29 @@ class Model {
         $result = "";
         $conn = $this->getConnection();
         $sql = "SELECT * FROM article;";
-    
+
         $stmt = $conn->prepare($sql);
-       
+
         $stmt -> execute();
-    
+
         if($stmt->rowCount() > 0){
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         else{
-            
+
             $result = false;
-            
+
         }
         return $result;
     }
-    
+
     public function getArticle($postId)
     {
         $conn = getConnection();
         $sql = ('SELECT * FROM article WHERE id = ?');
         $stmt = $conn->prepare($sql);
         $stmt->execute(array($postId));
-    
+
         if($stmt->rowCount() > 0){
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
         }
@@ -111,5 +111,41 @@ class Model {
             $result = false;
         }
         return $result;
-    }  
+    }
+
+    public function getArticleByUser($id_user)
+    {
+        $conn = getConnection();
+        $sql = ('SELECT * FROM article WHERE id_user = ?');
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(array($id_user));
+
+        if($stmt->rowCount() > 0){
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        else{
+            $result = false;
+        }
+        return $result;
+    }
+
+    function InsertImage($fileName, $commentaire, $title) {
+        $result = "";
+        $conn = getConnection();
+
+        $sql = "INSERT INTO galerie (filename, commentaire, titre) VALUES (?, ?, ?)";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt -> bindParam(1, $fileName, PDO::PARAM_STR);
+        $stmt -> bindParam(2, $commentaire, PDO::PARAM_STR);
+        $stmt -> bindParam(3, $title, PDO::PARAM_STR);
+
+        if($stmt -> execute()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
