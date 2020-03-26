@@ -8,9 +8,9 @@ foreach ($posts as $key => $value)
             <?= htmlspecialchars($value['Titre']) ?>
             <!-- <em>le </em> -->
         </h3>
-        
+
         <p>
-            <img src="<?= $value["Filename"] ?>" border="0" />;
+            <img src="<?= htmlspecialchars($value["Filename"]) ?>"/>;
             <br />
             <em><p>"<?= $value["Commentaire"] ?> "</p></em>
             <a href="articleView.php?id=<?= $value['Id'] ?>">Voir plus ...</a>

@@ -4,9 +4,11 @@
         <meta charset="utf-8" />
         <title>Login</title>
     </head>
-        
+
     <body>
-        <form class="login-space" method="POST" action="">
+    <div class="login-container">
+    <h2 class="login-title">Bienvenu sur mon blog !</h2>
+    <form class="login-space" method="POST" action="">
             <label for="login">E-Mail : </label>
             <input type="text" name="login"/><br><br>
             <label for="password">Mot de passe : </label>
@@ -14,16 +16,18 @@
             <button type="submit">Valider</button>
             <button type="reset">Annuler</button>
         </form>
-        <a href="index.php?action=visitor">Visiteur</a>
+        <a href="index.php?action=visitor"><button class="visitor-button"> Visiteur</button></a></div>
     </body>
     <style>
-
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
     display: table
+}
+.login-container {
+  margin: 50px;
 }
 .login-space {
     padding : 50px;
@@ -49,6 +53,16 @@ button {
 
 button:hover {
   opacity: 0.8;
+}
+
+.visitor-button {
+  margin: 24px auto;
+  background-color: #6666d1;
+}
+
+.login-title {
+  margin: auto;
+  color: #6666d1;
 }
 </style>
 </html>
