@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('./models/model.php');
+require('./controllers/blog.php');
 class Controller {
     public $model;
 
@@ -8,30 +9,17 @@ class Controller {
         $this->model = new Model();
     }
     
-    public function invoke(){
-        $reslt = $this->model->getLogin();
-        if(isset($reslt) && $reslt != false && $reslt["response"] == "OK") {
+    public function invoke($login, $pass){
+        $userVerified = $this->model->getLogin($login,$pass);
+        $blogController = new Blog();
+        if(isset($userVerified) && $userVerified != false && $userVerified["response"] == "OK") {
             $_SESSION["userVerified"] = true;
-            return $reslt;
+            require('./views/indexView.php');
         } else {
             $_SESSION["userVerified"] = false;
-            return false;
+            require('./views/loginView.php');
         }
         
-    }
-
-    public function listPosts()
-    {
-        $posts = $this->model->getArticles();
-        require('./views/listArticlesView.php');
-    }
-    
-    public function post()
-    {
-        $post = getPost($_GET['id']);
-        $comments = getComments($_GET['id']);
-    
-        require('postView.php');
     }
 
     function getUrlCurrently($filter = array()) {

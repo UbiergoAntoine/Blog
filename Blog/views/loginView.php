@@ -6,7 +6,7 @@
     </head>
         
     <body>
-        <form class="login-space" method="POST" action="">
+        <form class="login-space" method="POST" action="index.php">
             <label for="login">E-Mail : </label>
             <input type="text" name="login"/><br><br>
             <label for="password">Mot de passe : </label>

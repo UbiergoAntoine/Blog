@@ -5,9 +5,9 @@ $request = $_SERVER['REQUEST_URI'];
 $controllers = new Controller();
 $controllers->getUrlCurrently(array('action'));
 
-$reslt = $controllers->invoke();
+var_dump($_SESSION["userVerified"]);
 $pathProject = "/AFIP/Blog/Blog";
-if($reslt != false && $_SESSION["userVerified"] == true) {
+if($userVerified != false && $_SESSION["userVerified"] == true) {
     var_dump($_SESSION["userVerified"]);
     if (isset($_GET['action'])) {
         switch($_GET['action']){
@@ -56,19 +56,9 @@ if($reslt != false && $_SESSION["userVerified"] == true) {
         include './views/indexView.php';
     }
 } else {
-    if (isset($_GET['action'])) {
-        if($_GET['action'] == "visitor"){
-            include 'views/indexVisitorView.php';
-            unset($_GET['action']);
-        }
-        if($_GET['action'] == "login"){
-            include './views/loginView.php';
-            unset($_GET['action']);
-        }
-        if($_GET['action'] == "logout"){
-            include './views/loginView.php';
-            unset($_GET['action']);
-        }
+    if(isset($_REQUEST['login']) and isset($_REQUEST['password']))
+    {
+        $controllers->invoke($_REQUEST['login'], $_REQUEST['password']);
     } else {
         include 'views/loginView.php';
         unset($_GET['action']);

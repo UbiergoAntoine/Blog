@@ -1,7 +1,7 @@
 <?php
 
 
-function postArticle($fileName, $commentaire, $title) {
+public function postArticle($fileName, $commentaire, $title) {
     $result = "";
     $conn = "";
     try{

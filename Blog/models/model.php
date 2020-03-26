@@ -15,26 +15,19 @@ class Model {
         }
     }
     
-    public function getLogin(){
+    public function getLogin($login, $pass){
         $user = "";
         $_SESSION["userVerified"] = false;
-        if(isset($_REQUEST['login']) and isset($_REQUEST['password'])){
-            $newUser = array();
-            $login = $_REQUEST['login'];
-            $pass = md5($_REQUEST['password']);
-            $result = $this->loginUser($login,$pass);
-            if($result["response"] == "OK"){
-                $newUser["data"] = new User($result['data']);
-                $newUser["response"] = "OK";
-                $_SESSION["userVerified"] = true;
-                return $newUser;
-            } else{
-                echo "Le mot de passe est inccorect";
-                $_SESSION["userVerified"] = false;
-                return false;
-            }
+        $newUser = array();
+        $pass = md5($pass);
+        $result = $this->loginUser($login,$pass);
+        if($result["response"] == "OK"){
+            $newUser["data"] = new User($result['data']);
+            $newUser["response"] = "OK";
+            $_SESSION["userVerified"] = true;
             return $newUser;
-        } else {
+        } else{
+            echo "Le mot de passe est inccorect";
             $_SESSION["userVerified"] = false;
             return false;
         }
@@ -62,6 +55,26 @@ class Model {
         
         return $response;
         
+    }
+  
+    function InsertImage($fileName, $commentaire, $title) {
+        $result = "";
+        $conn = getConnection();
+            
+        $sql = "INSERT INTO galerie (filename, commentaire, titre) VALUES (?, ?, ?)";
+    
+        $stmt = $conn->prepare($sql);
+        
+        $stmt -> bindParam(1, $fileName, PDO::PARAM_STR);
+        $stmt -> bindParam(2, $commentaire, PDO::PARAM_STR);
+        $stmt -> bindParam(3, $title, PDO::PARAM_STR);
+    
+        if($stmt -> execute()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public function getArticles() {
@@ -98,5 +111,5 @@ class Model {
             $result = false;
         }
         return $result;
-    }    
+    }  
 }

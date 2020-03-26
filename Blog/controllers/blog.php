@@ -1,13 +1,36 @@
 <?php
+class Blog {
+    public $model;
 
-function addArticle($filename, $comment, $titre)
-{
-    $result = postArticle($filename, $comment, $titre);
-    var_dump($result);
-    if ($result === false) {
-        die('Impossible d\'ajouter le commentaire !');
+    public function __construct() {
+        $this->model = new Model();
     }
-    else {
-        header('Location: index.php?action=post&id=' . $postId);
+
+    function addArticle($filename, $comm, $titre)
+    {
+        $affectedLines = InsertImage($filename, $comm, $titre);
+    
+        if ($affectedLines === false) {
+            die('Impossible d\'ajouter l\'article !');
+        }
+        else {
+            header('Location: index.php?action=post&id=' . $postId);
+        }
     }
+    
+    public function listPosts()
+    {
+        $posts = $this->model->getArticles();
+        require('./views/listArticlesView.php');
+    }
+    
+    public function post()
+    {
+        $article = getArticle($_GET['id']);
+    
+        require('articleView.php');
+    }
+
+   
+
 }

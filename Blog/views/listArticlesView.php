@@ -13,7 +13,7 @@ foreach ($posts as $key => $value)
             <img src="<?= $value["Filename"] ?>" border="0" />;
             <br />
             <em><p>"<?= $value["Commentaire"] ?> "</p></em>
-            <a href="articleView.php?id=<?= $value['Id'] ?>">Voir plus ...</a>
+            <a href="index.php?action=post?id=<?= $value['Id'] ?>">Voir plus ...</a>
             <hr><br>
         </p>
     </div>
