@@ -20,6 +20,9 @@ if(isset($reslt) && $reslt != false && $reslt["response"] == "OK") {
             case "listPosts":
                 listPosts();
             break;
+            case "login":
+                include './views/indexView.php';
+            break;
             case "visitor":
                 include './view/indexVisitorView.php';
             break;
