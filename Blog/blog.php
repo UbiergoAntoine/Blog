@@ -63,39 +63,12 @@ $infoUser = $_SESSION["auth"];
             foreach ($images as $key => $value) {
                 echo "<h3>".$value["Titre"]."</h3>";
                 echo '<img src="'.$value["Filename"].'" border="0" />';
-                echo "<p>".$value["Commentaire"]."</p>";
+                echo "<p>"<?$value["Commentaire"] ?>"</p>";
                 echo "<hr><br>";
             }
         }
         
-        function getAllInfo() {
-                $result = "";
-                $conn = "";
-                try{
-                    $conn = new PDO("mysql:host=localhost;dbname=master_eil", "root", "");
-                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-                }catch(PDOException $exception){
-                    error_log("Connection error: " . $exception->getMessage());
-                }
-    
-                $sql = "SELECT * FROM galerie;";
-    
-                $stmt = $conn->prepare($sql);
-               
-                $stmt -> execute();
-    
-                if($stmt->rowCount() > 0){
-                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                }
-                else{
-                    
-                    $result = false;
-                    
-                }
-                return $result;
-            }
-    ?>
+        
     <a href="formulaire.php">Retour à la page d'insertion</a>
 </body>
 </html>
