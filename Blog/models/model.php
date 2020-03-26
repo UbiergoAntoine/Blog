@@ -15,8 +15,9 @@ class Model {
         }
     }
     
-    public function Login(){
+    public function getLogin(){
         $user = "";
+        $_SESSION["userVerified"] = false;
         if(isset($_REQUEST['login']) and isset($_REQUEST['password'])){
             $newUser = array();
             $login = $_REQUEST['login'];
@@ -25,13 +26,19 @@ class Model {
             if($result["response"] == "OK"){
                 $newUser["data"] = new User($result['data']);
                 $newUser["response"] = "OK";
+                $_SESSION["userVerified"] = true;
                 return $newUser;
+            } else{
+                echo "Le mot de passe est inccorect";
+                $_SESSION["userVerified"] = false;
+                return false;
             }
             return $newUser;
         } else {
+            $_SESSION["userVerified"] = false;
             return false;
         }
-        return false;
+        return -999;
     }
 
     public function loginUser($email, $password){    

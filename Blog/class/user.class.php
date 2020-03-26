@@ -17,9 +17,10 @@ class User {
           
     }
     public function Logout() {
+        session_start();
+        $_SESSION = array();
         if(isset($_SESSION['status'])) {
             unset($_SESSION['status']);
-            unset($_SESSION['email']);
             if(isset($_COOKIE[session_name()])) 
                 setcookie(session_name(), '', time() - 1000);
                 session_destroy();
@@ -31,10 +32,11 @@ class User {
             $user = loginUser($login,$pass);
             if($user["response"] == "OK"){
                 return $user;
+            }else{
+                return false;
             }
-            return $user;
         }
-        return false;
+        return -999;
     }
     
     public static function confirm_Member() {
