@@ -8,9 +8,9 @@
     <body>
         <form class="login-space" method="POST" action="index.php">
             <label for="login">E-Mail : </label>
-            <input type="text" name="login"/><br><br>
+            <input type="text" name="login" required/><br><br>
             <label for="password">Mot de passe : </label>
-            <input type="password" name="password"/><br>
+            <input type="password" name="password" required/><br>
             <button type="submit">Valider</button>
             <button type="reset">Annuler</button>
         </form>
