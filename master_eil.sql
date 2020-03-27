@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  ven. 27 mars 2020 à 16:12
+-- Généré le :  ven. 27 mars 2020 à 17:09
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.1.33
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `article` (
   `Id` int(50) NOT NULL,
-  `Filename` varchar(50) NOT NULL,
+  `Filename` longtext NOT NULL,
   `Commentaire` varchar(50) NOT NULL,
   `Titre` varchar(37) NOT NULL,
   `id_user` int(11) NOT NULL
@@ -43,7 +43,10 @@ CREATE TABLE `article` (
 INSERT INTO `article` (`Id`, `Filename`, `Commentaire`, `Titre`, `id_user`) VALUES
 (2, './photos/tmXDd_19qt3m.jpg', 'Test d\'un commentaire', 'Ceci est un titre de test', 2),
 (3, './photos/pK3NM_moyenage.jpg', 'Le commentaire de l&#039;article du Moyen-Age', 'Article sur le moyen age', 3),
-(4, './photos/upkER_logo museum.png', 'Je sers toujours de test à la suppression ...', 'Je sais que je vais être supprimé', 3);
+(4, './photos/upkER_logo museum.png', 'Je sers toujours de test à la suppression ...', 'Je sais que je vais être supprimé', 3),
+(5, './photos/ClFAy_secww.jpg', 'zzzzz', 'zzzz', 3),
+(6, './photos/D8Hbq_logo museum.png', 'ssssss', 'ssss', 1),
+(7, './photos/lT7zF_icone-musee.png', 'aaaaa', 'aaaaaa', 1);
 
 -- --------------------------------------------------------
 
@@ -92,7 +95,7 @@ ALTER TABLE `personne`
 -- AUTO_INCREMENT pour la table `article`
 --
 ALTER TABLE `article`
-  MODIFY `Id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `personne`
