@@ -13,7 +13,7 @@ var_dump($articleInfo);?>
         <textarea id="commentaire" name="commentaire"
           rows="5" cols="33"><?= $articleInfo['Commentaire'] ?></textarea>
         <p>Choisissez une photo avec une taille inférieure à 2Mo.</p>
-        <input type="file" id="fileToUpload" name="fileToUpload" value="Parcourir..." /><br><br>
+        <input type="file" id="fileToUpload" name="fileToUpload"accept="image/png, image/jpeg" value="Parcourir..." /><br><br>
         <button type="submit" name="submit">Envoyer</button>
     </form>
 
