@@ -34,6 +34,22 @@ class Model {
         return -999;
     }
 
+    public function getUserInfo($id_user)  
+    {
+        $conn = $this->getConnection();
+        $sql = 'SELECT * FROM personne WHERE Id = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(array($id_user));
+
+        if($stmt->rowCount() > 0){
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+        else{
+            $result = false;
+        }
+        return $result;
+    }
+
     public function loginUser($email, $password){
         $conn = $this->getConnection();
 

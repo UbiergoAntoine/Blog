@@ -6,7 +6,9 @@ class Blog {
 
     public function __construct() {
         $this->model = new BlogModel();
-        $this->userInfo = $this->model->getUserInfo($_SESSION["userId"]);
+        if(isset($_SESSION["userId"])){
+            $this->userInfo = $this->model->getUserInfo($_SESSION["userId"]);
+        }
     }
 
     function addArticle($filename, $comm, $titre)

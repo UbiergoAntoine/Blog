@@ -14,6 +14,7 @@ class Controller {
         if(isset($this->userVerified) && $this->userVerified != false && $this->userVerified["response"] == "OK") {
             $_SESSION["userVerified"] = true;
             $_SESSION["userId"] = $this->userVerified["data"]->getId();
+            $blogController = new Blog();
             require('./views/indexView.php');
         } else {
             $_SESSION["userVerified"] = false;
