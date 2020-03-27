@@ -1,40 +1,70 @@
 <?php
-class User{
+class User {
+    
     private $_id;
     private $_nom;
     private $_prenom;
     private $_email;
     private $_motdepasse;
-
+    
 
     public function __construct($result){
-        $this->_id = (int) $result["id"];
-        $this->_nom = (string) $result["nom"];
-        $this->_prenom = (string) $result["prenom"];
-        $this->_email = (string) $result["email"];
-        $this->_motdepasse = (string) $result["motdepasse"];
-
+        $this->_id = (int) $result["Id"];
+        $this->_nom = (string) $result["Nom"];
+        $this->_prenom = (string) $result["Prenom"];
+        $this->_email = (string) $result["Email"];
+        $this->_motdepasse = (string) $result["MotDePasse"];
+          
     }
-
-    public function loginUser(){
-        $response['response'] = 'ok';
-        echo $username . " " . $password;
-        $sql= "SELECT * FROM personne WHERE Email LIKE :username AND MotDePasse LIKE :password;";
-
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':username', $_id, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $password, PDO::PARAM_STR);
-
-        $stmt->execute();
-
-        if($stmt->rowCount() == 1) {
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function Logout() {
+        session_start();
+        $_SESSION = array();
+        if(isset($_SESSION['status'])) {
+            unset($_SESSION['status']);
+            if(isset($_COOKIE[session_name()])) 
+                setcookie(session_name(), '', time() - 1000);
+                session_destroy();
         }
-        else {
-            $response['response'] = 'KO';
-        }
-
-        return $response;
-
     }
+    public function Login(){
+        if(isset($_SESSION['Auth']) and isset($_SESSION['Auth']['login']) and isset($_SESSION['Auth']['pass'])){
+            extract($_SESSION['Auth']);
+            $user = loginUser($login,$pass);
+            if($user["response"] == "OK"){
+                return $user;
+            }else{
+                return false;
+            }
+        }
+        return -999;
+    }
+    
+    public static function confirm_Member() {
+        if(isset($_SESSION['userObject'])) return header("location: ");
+    }
+    
+    public function getInfo($result){
+        $row = $result->fetch(PDO::FETCH_ASSOC);
+        return $row;
+    }
+    public function getAllInfo(){
+        $allInfo = array($this->currentUserId,$this->currentUsername,$this->currentUserEmail,$this->currentUserPassword);
+        return $allInfo;
+    }
+    public function getId() {
+        return $this->_id;        
+    }
+    public function getEmail() {
+        return $this->_email;
+    }
+    public function getMDP() {
+        return $this->_motdepasse;
+    }
+    public function getNom() {
+        return $this->_nom;
+    }
+    public function getPrenom() {
+        return $this->_prenom;
+    }
+    
 }
