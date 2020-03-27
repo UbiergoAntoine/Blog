@@ -1,5 +1,7 @@
 <?php
 require('controllers/controller.php');
+require('controllers/blog.php');
+
 $request = $_SERVER['REQUEST_URI'];
 $controllers = new Controller();
 $pathProject = "/AFIP/Blog/Blog";
@@ -74,9 +76,9 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
                             $filenameWithChar = end($filenameArr);
                             $filenameWithCharArr = explode("_",$filenameWithChar);
                             $filename = end($filenameWithCharArr);
-                            
+
                             if($_REQUEST["title"] != $currentValue["Titre"] || $_REQUEST["commentaire"] != $currentValue["Commentaire"] || $_FILES["fileToUpload"]["name"] != $filename){
-                              
+
                                 if ($uploadOk == 0) {
                                     echo "Votre fichier ne peut être uploadé.";
                                 } else {
