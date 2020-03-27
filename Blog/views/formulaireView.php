@@ -7,7 +7,7 @@
         <textarea id="commentaire" name="commentaire"
           rows="5" cols="33" placeholder="Veuillez entrer le commentaire du fichier à transférer"></textarea>
         <p>Choisissez une photo avec une taille inférieure à 2Mo.</p>
-        <input type="file" id="fileToUpload" name="fileToUpload" value="Parcourir..." /><br><br>
+        <input type="file" id="fileToUpload" name="fileToUpload" accept="image/png, image/jpeg" value="Parcourir..." /><br><br>
         <button type="submit" name="submit">Envoyer</button>
     </form>
     <a href="blog.php">Page d'affichage du blog</a><br>
