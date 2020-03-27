@@ -51,45 +51,54 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
             case "editArticle":
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
                     $controllers->editArticle($_GET["id"]);
-                }
-                if(isset($_POST["submit"]) && isset($_REQUEST)){
-                    if(!isset($_REQUEST["title"])){
-                        echo "pas de titre";
-                    }
-                    if(!isset($_REQUEST["commentaire"])){
-                        echo "pas de commentaire";
-                    }
-                    if(!isset($_FILES["fileToUpload"])){
-                        echo "pas de fichier";
-                    }
-                    if(isset($_REQUEST["title"]) && isset($_REQUEST["commentaire"]) && isset($_FILES["fileToUpload"])) {
-                        $target_dir = "./photos/";
-                        $target_file = $target_dir . $controllers->generateChar(5). "_" . basename($_FILES["fileToUpload"]["name"]);
-                        $uploadOk = 1;
-                        if ($_FILES["fileToUpload"]["size"] > 200000) {
-                            echo "Désolé l'image est supérieure à 2Mo !";
-                            $uploadOk = 0;
-                        } else {
-                            $uploadOk = 1;
+                    if(isset($_POST["submit"]) && isset($_REQUEST)){
+                        if(!isset($_REQUEST["title"])){
+                            echo "pas de titre";
                         }
-                        if ($uploadOk == 0) {
-                            echo "Votre fichier ne peut être uploadé.";
-                        } else {
-                            echo "\n Aucune erreur dans le transfert du fichier. <br>";
-                            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                                $filename = basename( $_FILES["fileToUpload"]["name"]);
-                                echo "Le fichier ". $filename. " a été copié dans le répertoire photos <br>";
-                                if($controllers->saveArticle(array($target_file, htmlspecialchars($_POST["commentaire"],ENT_QUOTES), htmlspecialchars($_POST["title"], ENT_QUOTES)))) {
-                                    echo "Modification du Post réussi ! <br>";
+                        if(!isset($_REQUEST["commentaire"])){
+                            echo "pas de commentaire";
+                        }
+                        if(!isset($_FILES["fileToUpload"])){
+                            echo "pas de fichier";
+                        }
+                        if(isset($_REQUEST["title"]) && isset($_REQUEST["commentaire"]) && isset($_FILES["fileToUpload"])) {
+                            $target_dir = "./photos/";
+                            $target_file = $target_dir . $controllers->generateChar(5). "_" . basename($_FILES["fileToUpload"]["name"]);
+                            $uploadOk = 1;
+                            if ($_FILES["fileToUpload"]["size"] > 200000) {
+                                echo "Désolé l'image est supérieure à 2Mo !";
+                                $uploadOk = 0;
+                            } else {
+                                $uploadOk = 1;
+                            }
+                            $currentValue = $controllers->model->getArticle($_GET["id"]);
+                            $filenameArr = explode("/",$currentValue["Filename"]);
+                            $filenameWithChar = end($filenameArr);
+                            $filenameWithCharArr = explode("_",$filenameWithChar);
+                            $filename = end($filenameWithCharArr);
+                            
+                            if($_REQUEST["title"] != $currentValue["Titre"] || $_REQUEST["commentaire"] != $currentValue["Commentaire"] || $_FILES["fileToUpload"]["name"] != $filename){
+                              
+                                if ($uploadOk == 0) {
+                                    echo "Votre fichier ne peut être uploadé.";
+                                } else {
+                                    echo "\n Aucune erreur dans le transfert du fichier. <br>";
+                                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                                        $filename = basename( $_FILES["fileToUpload"]["name"]);
+                                        echo "Le fichier ". $filename. " a été copié dans le répertoire photos <br>";
+                                        if($controllers->saveArticle(array($target_file, htmlspecialchars($_POST["commentaire"],ENT_QUOTES), htmlspecialchars($_POST["title"], ENT_QUOTES),$_GET['id']))) {
+                                            echo "Modification du Post réussi ! <br>";
+                                        }
+                                    } else {
+                                        echo "Désolé nous n'avons pas pu transférer votre fichier.";
+                                    }
                                 }
                             } else {
-                                echo "Désolé nous n'avons pas pu transférer votre fichier.";
+                                echo "Aucun champs n'a été modifié, veuillez changer un des champs.";
                             }
                         }
                     }
                 }
-
-
             break;
             case "deleteArticle":
                 if (isset($_GET['id']) && $_GET['id'] > 0) {

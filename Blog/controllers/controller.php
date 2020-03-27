@@ -41,10 +41,15 @@ class Controller {
 
     public function saveArticle($values){
         $rslt = $this->model->UpdateArticle($values);
+        // if($_REQUEST["title"] != $articleInfo["Titre"] && $_REQUEST["commentaire"] != $articleInfo["Commentaire"] && $_FILES["fileToUpload"] != $articleInfo["Filename"]){
+        //     echo "yes";
+        // }
+        var_dump($rslt);
         if($rslt){
-            echo "L'article a bien été modifié";
-            sleep(5);
-            header("Location : index.php");
+            echo "L'article a bien été modifié, vous allez être redirigé";
+            header("Location: index.php?action=viewListArticlesByUser&id=". $_SESSION["userId"] ."");
+        } else {
+            echo "La mise à jour de l'article n'a pas fonctionné";
         }
     }
 
