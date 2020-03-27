@@ -1,14 +1,19 @@
 <?php
+
+/*
+* Index.php : Routeur avec switch case permettant d'enregistrer nos routes. Ces routes permettent d'appeler les méthode des contrôleurs 
+* et pour afficher les vues avec les données nécessaires à celle-ci.
+*/
 require('controllers/controller.php');
 require('controllers/blog.php');
 
 $controllers = new Controller();
-//si l'utilisateur est connecté 
+// si l'utilisateur est connecté 
 if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
     if(isset($_SESSION["userId"])){
         $blogController = new Blog();
     }
-    //si $_GET['action'] existe, switch case avec toutes les routes créés
+    // si $_GET['action'] existe, switch case avec toutes les routes créés
     if (isset($_GET['action'])) {
         switch($_GET['action']){
             case "login":
@@ -50,11 +55,11 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
                                 $filename = end($filenameWithCharArr);
                                 if($_REQUEST["title"] != $currentValue["Titre"] || $_REQUEST["commentaire"] != $currentValue["Commentaire"] || $_FILES["fileToUpload"]["name"] != $filename){
                                     
-                                    //upload du fichier et récupération du filename
+                                    // upload du fichier et récupération du filename
                                     if($target_file = $controllers->uploadFile($_FILES["fileToUpload"]["name"])){
                                         $filename = basename( $_FILES["fileToUpload"]["name"]);
                                         echo "Le fichier ". $filename. " a été copié dans le répertoire photos <br>";
-                                        //Modification de l'article dans bdd
+                                        // Modification de l'article dans bdd
                                         if($controllers->saveArticle(array($target_file, htmlspecialchars($_POST["commentaire"],ENT_QUOTES), htmlspecialchars($_POST["title"], ENT_QUOTES),$_GET['id']))) {
                                             echo "Modification du Post réussi ! <br>";
                                         }
@@ -62,7 +67,7 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
                                         echo "Désolé nous n'avons pas pu transférer votre fichier.";
                                     }
                                 }
-                            //si aucun fichier n'est selectionné modification du commentaire et titre avec l'ancienne image
+                            // si aucun fichier n'est selectionné modification du commentaire et titre avec l'ancienne image
                             } else {
                                 $currentValue = $controllers->model->getArticle($_GET["id"]);
                                 if($controllers->saveArticle(array($currentValue["Filename"], htmlspecialchars($_POST["commentaire"],ENT_QUOTES), htmlspecialchars($_POST["title"], ENT_QUOTES),$_GET['id']))) {
@@ -97,11 +102,11 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
                 // Validation user create article
                 if(isset($_POST["submit"]) && isset($_REQUEST)){
                     if(isset($_REQUEST["title"]) || isset($_REQUEST["commentaire"]) || isset($_FILES["fileToUpload"]["name"])){
-                        //upload du fichier et récupération du filename
+                        // upload du fichier et récupération du filename
                         if($target_file = $controllers->uploadFile($_FILES["fileToUpload"]["name"])){
                             $filename = basename( $_FILES["fileToUpload"]["name"]);
                             echo "Le fichier ". $filename. " a été copié dans le répertoire photos <br>";
-                            //enregistrement du nouvel article dans bdd
+                            // enregistrement du nouvel article dans bdd
                             if($controllers->saveNewArticle(array($_REQUEST["title"], $_REQUEST["commentaire"], $target_file, $_SESSION["userId"]))) {
                                 echo "Ajout du Post réussi ! <br>";
                             }
