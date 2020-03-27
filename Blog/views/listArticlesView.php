@@ -1,5 +1,5 @@
 <?php
-foreach ($posts as $key => $value)
+if ($posts) {foreach ($posts as $key => $value)
 {
 ?>
 
@@ -15,6 +15,10 @@ foreach ($posts as $key => $value)
             <hr><br>
         </p>
     </div>
+<?php
+}}else{
+?>
+    <p>Aucun articles de la communauté</p>
 <?php
 }
 ?>

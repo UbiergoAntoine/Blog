@@ -5,6 +5,8 @@
 
 <a href="index.php">Se déconnecter</a>
 <a href="index.php">Liste de tous les articles auteurs confondu</a>
+<a href="index.php?action=createArticle">Créer un article</a>
+
 <hr>
 <h3>Bienvenue <?php echo $blogController->userInfo["Nom"]  . " " . $blogController->userInfo["Prenom"] ?></h3>
 <h3>Le <?php $dt = new DateTime(); echo $dt->format('d-m-Y H:i:s');  ?></h3>

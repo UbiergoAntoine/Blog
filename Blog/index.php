@@ -100,17 +100,22 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
                     }
                 }
             break;
+
             case "deleteArticle":
-                if (isset($_GET['id']) && $_GET['id'] > 0) {
-                    if (!empty($_POST['author']) && !empty($_POST['comment'])) {
-                        addArticle($_GET['id'], $_POST['author'], $_POST['comment']);
-                    }
-                    else {
-                        echo 'Erreur : tous les champs ne sont pas remplis !';
-                    }
+                if (isset($_GET['idArticle']) && $_GET['idArticle'] > 0) {
+                    $controllers->deletePost($_GET['idArticle']);
+
                 }
                 else {
-                    echo 'Erreur : aucun identifiant de billet envoyé';
+                    echo 'Erreur : aucun identifiant de post envoyé';
+                }
+            break;
+            case "confirmDeleteArticle":
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    $controllers->confirmDeletePost($_GET['id']);
+                }
+                else {
+                    echo 'Erreur : aucun identifiant de post envoyé';
                 }
             break;
             // case "createArticle":

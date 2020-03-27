@@ -165,4 +165,14 @@ class Model {
         }
         return $result;
     }
+
+    public function deleteArticle($idArticle)
+    {
+        $conn = $this->getConnection();
+        $sql = 'DELETE FROM article WHERE Id = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(array($idArticle));
+
+        return $stmt->rowCount();
+    }
 }

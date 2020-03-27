@@ -39,6 +39,19 @@ class Controller {
         require('./views/editArticleView.php');
     }
 
+    public function confirmDeletePost($idArticle) {
+        $articleInfo = $this->model->getArticle($idArticle);
+        require('./views/confirmDeleteView.php');
+    }
+    public function deletePost($idArticle) {
+        $result = $this->model->deleteArticle($idArticle);
+        if ($result) {
+            header("Location: index.php?action=viewListArticlesByUser&id=". $_SESSION["userId"] ."");
+        } else {
+            echo "Impossible de supprimer l'article le post";
+        }
+    }
+
     public function saveArticle($values){
         $rslt = $this->model->UpdateArticle($values);
         // if($_REQUEST["title"] != $articleInfo["Titre"] && $_REQUEST["commentaire"] != $articleInfo["Commentaire"] && $_FILES["fileToUpload"] != $articleInfo["Filename"]){
@@ -46,7 +59,7 @@ class Controller {
         // }
         var_dump($rslt);
         if($rslt){
-            echo "L'article a bien été modifié, vous allez être redirigé";
+            echo "'article a bien été modifié, vous allez être redirigé";
             header("Location: index.php?action=viewListArticlesByUser&id=". $_SESSION["userId"] ."");
         } else {
             echo "La mise à jour de l'article n'a pas fonctionné";

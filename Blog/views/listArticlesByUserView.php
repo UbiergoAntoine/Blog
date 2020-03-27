@@ -1,5 +1,5 @@
 <?php
-foreach ($ownArticles as $key => $value)
+if ($ownArticles) {foreach ($ownArticles as $key => $value)
 {
 ?>
 
@@ -12,10 +12,15 @@ foreach ($ownArticles as $key => $value)
             <br />
             <em><p>"<?= $value["Commentaire"] ?> "</p></em>
             <a href="index.php?action=editArticle&id=<?= $value['Id'] ?>">Mode édition</a>
-            <a href="index.php?action=createArticle">Créer un article</a>
             <hr><br>
         </p>
     </div>
+<?php
+}}else{
+?>
+    <p>Aucun article rédigé par vous. Veuillez cliquer sur
+    <a href="index.php?action=createArticle">créer un article</a></p>
+
 <?php
 }
 ?>

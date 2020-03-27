@@ -16,7 +16,7 @@
         <button type="submit" name="submit">Envoyer</button>
     </form>
 
-    <a href="index.php?action=deleteArticle&id=<?= $value['Id'] ?>">Supprimer l'article</a>
+    <a href="index.php?action=confirmDeleteArticle&id=<?= $articleInfo['Id'] ?>">Supprimer l'article</a>
 <hr>
 <?php $content = ob_get_clean(); ?>
 
