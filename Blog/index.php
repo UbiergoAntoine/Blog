@@ -69,7 +69,7 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
                                     echo "Modification du Post réussi ! <br>";
                                 }
                             }
-                            
+
                         }
                     }
                 }
@@ -118,7 +118,10 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
         $blogController = new Blog();
         include './views/indexView.php';
     }
-} else {
+}
+// On vérifie que l'action soit = "visitor" afin de le rediriger vers l'index des visiteurs
+// Soit l'utilisateur arrive à se log et on le redirige vers le login view des utilisateurs connectés
+else {
     if (isset($_GET['action'])) {
         if($_GET['action'] == "visitor"){
             include './views/indexVisitorView.php';
@@ -135,6 +138,6 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
             unset($_GET['action']);
         }
     }
-    
+
 }
 ?>

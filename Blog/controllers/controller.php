@@ -21,24 +21,25 @@ class Controller {
             require('./views/loginView.php');
         }
     }
-
+// Retourne l'array de tous les articles en BDD
     public function listPosts() {
         $posts = $this->model->getArticles();
         require('./views/listArticlesView.php');
     }
-
+// Retourne l'array de tous les articles par utilisateur en BDD
     public function listPostsByUser($id_user) {
         $blogController = new Blog();
         $ownArticles = $this->model->getArticleByUser($this->userInfo["Id"]);
         require('./views/ownedArticlesView.php');
     }
 
+// Retourne l'ojet Article sélectionné en envoyant l'utilisateur sur le formulaire d'édition
     public function editArticle($idArticle) {
         $blogController = new Blog();
         $articleInfo = $this->model->getArticle($idArticle);
         require('./views/editArticleView.php');
     }
-    
+// Update l'article
     public function saveArticle($values){
         $rslt = $this->model->UpdateArticle($values);
         // if($_REQUEST["title"] != $articleInfo["Titre"] && $_REQUEST["commentaire"] != $articleInfo["Commentaire"] && $_FILES["fileToUpload"] != $articleInfo["Filename"]){
