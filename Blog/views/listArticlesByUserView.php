@@ -1,7 +1,5 @@
-<h1>Liste de mes articles</h1>
-<a href="index.php?action=addArticle?id=<?= $reslt['data']->getId() ?>">Créer un nouvel article</a>
 <?php
-foreach ($posts as $key => $value)
+foreach ($ownArticles as $key => $value)
 {
 ?>
 

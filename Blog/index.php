@@ -1,14 +1,16 @@
 
 <?php
 require('controllers/controller.php');
+require('controllers/blog.php');
+
 $request = $_SERVER['REQUEST_URI'];
 $controllers = new Controller();
-$controllers->getUrlCurrently(array('action'));
-
-var_dump($_SESSION["userVerified"]);
+// $_SESSION["userVerified"] = false;
 $pathProject = "/AFIP/Blog/Blog";
-if($userVerified != false && $_SESSION["userVerified"] == true) {
-    var_dump($_SESSION["userVerified"]);
+if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
+    if(isset($_SESSION["userId"])){
+        $blogController = new Blog();
+    }
     if (isset($_GET['action'])) {
         switch($_GET['action']){
             case "listPosts":
@@ -20,12 +22,18 @@ if($userVerified != false && $_SESSION["userVerified"] == true) {
                 unset($_GET);
             break;
             case "visitor":
-                include './view/indexVisitorView.php';
+                include './views/indexVisitorView.php';
                 unset($_GET);
             break;
             case "logout":
-                $reslt["data"]->Logout();
-                $reset = $_SERVER["REQUEST_URI"];
+                session_start();
+                $_SESSION = array();
+                if(isset($_SESSION['status'])) {
+                    unset($_SESSION['status']);
+                    if(isset($_COOKIE[session_name()])) 
+                        setcookie(session_name(), '', time() - 1000);
+                        session_destroy();
+                }
                 unset($_GET["action"]);
                 header('Location: index.php');
             break;
@@ -38,9 +46,8 @@ if($userVerified != false && $_SESSION["userVerified"] == true) {
                 }
             break;
             case "viewListArticlesByUser":
-                echo "HUFEHFHEU";
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
-                $controllers->listPostsByUser($_GET['id']);
+                    include './views/ownedArticlesView.php';
                 }
             break;
             case "saveArticle":
@@ -59,6 +66,7 @@ if($userVerified != false && $_SESSION["userVerified"] == true) {
         }
     }
     else {
+        $blogController = new Blog();
         include './views/indexView.php';
     }
 } else {
@@ -70,3 +78,5 @@ if($userVerified != false && $_SESSION["userVerified"] == true) {
         unset($_GET['action']);
     }
 }
+
+

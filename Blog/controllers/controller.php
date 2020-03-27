@@ -1,18 +1,19 @@
 <?php
 session_start();
 require('./models/model.php');
-require('./controllers/blog.php');
 class Controller {
     public $model;
+    public $userVerified;
+
     public function __construct() {
         $this->model = new Model();
     }
     
     public function invoke($login, $pass){
-        $userVerified = $this->model->getLogin($login,$pass);
-        $blogController = new Blog();
-        if(isset($userVerified) && $userVerified != false && $userVerified["response"] == "OK") {
+        $this->userVerified = $this->model->getLogin($login,$pass);
+        if(isset($this->userVerified) && $this->userVerified != false && $this->userVerified["response"] == "OK") {
             $_SESSION["userVerified"] = true;
+            $_SESSION["userId"] = $this->userVerified["data"]->getId();
             require('./views/indexView.php');
         } else {
             $_SESSION["userVerified"] = false;
@@ -26,8 +27,9 @@ class Controller {
     }
 
     public function listPostsByUser($id_user) {
-        $posts = $this->model->getArticleByUser($id_user);
-        require('./views/listArticlesByUserView.php');
+        $blogController = new Blog();
+        $ownArticles = $this->model->getArticleByUser($this->userInfo["Id"]);
+        require('./views/ownedArticlesView.php');
     }
 
     public function post() {

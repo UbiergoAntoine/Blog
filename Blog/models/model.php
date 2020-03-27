@@ -59,7 +59,7 @@ class Model {
   
     function InsertImage($fileName, $commentaire, $title) {
         $result = "";
-        $conn = getConnection();
+        $conn =  $this->getConnection();
             
         $sql = "INSERT INTO galerie (filename, commentaire, titre) VALUES (?, ?, ?)";
     
@@ -99,7 +99,7 @@ class Model {
 
     public function getArticle($postId)
     {
-        $conn = getConnection();
+        $conn = $this->getConnection();
         $sql = ('SELECT * FROM article WHERE id = ?');
         $stmt = $conn->prepare($sql);
         $stmt->execute(array($postId));
@@ -115,8 +115,8 @@ class Model {
 
     public function getArticleByUser($id_user)
     {
-        $conn = getConnection();
-        $sql = ('SELECT * FROM article WHERE id_user = ?');
+        $conn = $this->getConnection();
+        $sql = 'SELECT * FROM article WHERE id_user = ?';
         $stmt = $conn->prepare($sql);
         $stmt->execute(array($id_user));
 
@@ -127,25 +127,5 @@ class Model {
             $result = false;
         }
         return $result;
-    }
-
-    function InsertImage($fileName, $commentaire, $title) {
-        $result = "";
-        $conn = getConnection();
-
-        $sql = "INSERT INTO galerie (filename, commentaire, titre) VALUES (?, ?, ?)";
-
-        $stmt = $conn->prepare($sql);
-
-        $stmt -> bindParam(1, $fileName, PDO::PARAM_STR);
-        $stmt -> bindParam(2, $commentaire, PDO::PARAM_STR);
-        $stmt -> bindParam(3, $title, PDO::PARAM_STR);
-
-        if($stmt -> execute()){
-            return true;
-        }
-        else{
-            return false;
-        }
     }
 }

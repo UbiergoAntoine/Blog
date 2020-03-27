@@ -1,5 +1,4 @@
-<?php $title = 'Mon blog';
-var_dump($controllers);?>
+<?php $title = 'Mon blog';?>
 <?php ob_start(); ?>
 <h1>Formuliare d'ajout de contenu au Blog</h1>
     <form method="POST" action="confirm_add.php" enctype="multipart/form-data">
