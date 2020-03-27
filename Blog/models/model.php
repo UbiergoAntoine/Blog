@@ -1,5 +1,5 @@
 <?php
-include "./class/user.class.php";
+include "user.php";
 class Model {
 
     function getConnection()
