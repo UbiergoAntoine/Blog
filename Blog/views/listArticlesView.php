@@ -18,7 +18,7 @@ if ($posts) {foreach ($posts as $key => $value)
 <?php
 }}else{
 ?>
-    <p>Aucun articles de la communauté</p>
+    <p>Aucun article de la communauté</p>
 <?php
 }
 ?>

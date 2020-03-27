@@ -68,9 +68,9 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
                                 $filenameWithChar = end($filenameArr);
                                 $filenameWithCharArr = explode("_",$filenameWithChar);
                                 $filename = end($filenameWithCharArr);
-    
+
                                 if($_REQUEST["title"] != $currentValue["Titre"] || $_REQUEST["commentaire"] != $currentValue["Commentaire"] || $_FILES["fileToUpload"]["name"] != $filename){
-    
+
                                     if ($uploadOk == 0) {
                                         echo "Votre fichier ne peut être uploadé.";
                                     } else {
@@ -94,7 +94,7 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
                                     echo "Modification du Post réussi ! <br>";
                                 }
                             }
-                            
+
                         }
                     }
                 }
@@ -155,7 +155,10 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
         $blogController = new Blog();
         include './views/indexView.php';
     }
-} else {
+}
+// On vérifie que l'action soit = "visitor" afin de le rediriger vers l'index des visiteurs
+// Soit l'utilisateur arrive à se log et on le redirige vers le login view des utilisateurs connectés
+else {
     if (isset($_GET['action'])) {
         if($_GET['action'] == "visitor"){
             include './views/indexVisitorView.php';
@@ -172,6 +175,6 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
             unset($_GET['action']);
         }
     }
-    
+
 }
 ?>
