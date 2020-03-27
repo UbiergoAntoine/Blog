@@ -8,7 +8,7 @@ if ($ownArticles) {foreach ($ownArticles as $key => $value)
             <?= htmlspecialchars($value['Titre']) ?>
         </h3>
         <p>
-            <img src="<?= htmlspecialchars($value["Filename"]) ?>"/>;
+            <img src="<?= htmlspecialchars($value["Filename"]) ?>"/>
             <br />
             <em><p>"<?= $value["Commentaire"] ?> "</p></em>
             <a href="index.php?action=editArticle&id=<?= $value['Id'] ?>">Mode édition</a>
