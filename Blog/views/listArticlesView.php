@@ -18,3 +18,4 @@ foreach ($posts as $key => $value)
 <?php
 }
 ?>
+<!-- View qui affiche de la liste de tous les posts auteurs confondus -->

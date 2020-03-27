@@ -1,7 +1,5 @@
 <?php
 require('controllers/controller.php');
-require('controllers/blog.php');
-
 $request = $_SERVER['REQUEST_URI'];
 $controllers = new Controller();
 $pathProject = "/AFIP/Blog/Blog";
@@ -104,6 +102,19 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
                     echo 'Erreur : aucun identifiant de billet envoyé';
                 }
             break;
+            // case "createArticle":
+            //     if (isset($_GET['id']) && $_GET['id'] > 0) {
+            //         if (!empty($_POST['author']) && !empty($_POST['comment'])) {
+            //             addArticle($_GET['id'], $_POST['author'], $_POST['comment']);
+            //         }
+            //         else {
+            //             echo 'Erreur : tous les champs ne sont pas remplis !';
+            //         }
+            //     }
+            //     else {
+            //         echo 'Erreur : aucun identifiant de billet envoyé';
+            //     }
+            // break;
             case "saveArticle":
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
                     if (!empty($_POST['author']) && !empty($_POST['comment'])) {

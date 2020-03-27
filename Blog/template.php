@@ -9,3 +9,5 @@
         <?= $content ?>
     </body>
 </html>
+
+<!-- C'est dans cette page que les différentes vues prennent les values de $title et $content -->
