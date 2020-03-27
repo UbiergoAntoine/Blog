@@ -3,7 +3,7 @@
 
 <?php ob_start(); ?>
 <h1>Blog</h1>
-<em><a href="index.php?action=login">Se connecter</a></em>
+<em><a href="index.php">Se connecter</a></em>
 <hr>
 <h3>Bienvenue visiteur !</h3>
 <h3>Le <?php $dt = new DateTime(); echo $dt->format('d-m-Y H:i:s');  ?></h3>

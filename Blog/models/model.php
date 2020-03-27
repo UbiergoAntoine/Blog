@@ -134,6 +134,29 @@ class Model {
         return $result;
     }
 
+    public function createArticle($data) {
+        $result = "";
+        $conn = $this->getConnection();
+        $sql = "INSERT INTO Article (Titre, Commentaire, Filename, id_user) VALUES (?, ?, ?, ?)";
+
+        $stmt = $conn->prepare($sql);
+        $stmt -> bindParam(1, $data[0], PDO::PARAM_STR);
+        $stmt -> bindParam(2, $data[1], PDO::PARAM_STR);
+        $stmt -> bindParam(3, $data[2], PDO::PARAM_STR);
+        $stmt -> bindParam(4, $data[3], PDO::PARAM_INT);
+
+        $stmt -> execute();
+        if($stmt->rowCount() > 0){
+            return true;
+        }
+        else{
+
+            return false;
+
+        }
+        return false;
+    }
+
     public function getArticle($postId)
     {
         $conn = $this->getConnection();

@@ -38,9 +38,33 @@ class Controller {
         $articleInfo = $this->model->getArticle($idArticle);
         require('./views/editArticleView.php');
     }
+    
+    public function saveArticle($values){
+        $rslt = $this->model->UpdateArticle($values);
+        // if($_REQUEST["title"] != $articleInfo["Titre"] && $_REQUEST["commentaire"] != $articleInfo["Commentaire"] && $_FILES["fileToUpload"] != $articleInfo["Filename"]){
+        //     echo "yes";
+        // }
+        var_dump($rslt);
+        if($rslt){
+            echo "L'article a bien été modifié, vous allez être redirigé";
+            header("Location: index.php?action=viewListArticlesByUser&id=". $_SESSION["userId"] ."");
+        } else {
+            echo "La mise à jour de l'article n'a pas fonctionné";
+        }
+    }
+
 
     public function createArticle() {
         require('./views/createArticleView.php');
+    }
+    public function saveNewArticle($values) {
+        $rslt = $this->model->createArticle($values);
+        if($rslt){
+            echo "L'article a bien été ajouté, vous allez être redirigé";
+            header("Location: index.php?action=viewListArticlesByUser&id=". $_SESSION["userId"] ."");
+        } else {
+            echo "L'ajout de l'article n'a pas fonctionné";
+        }
     }
     public function confirmDeletePost($idArticle) {
         $articleInfo = $this->model->getArticle($idArticle);
@@ -55,19 +79,6 @@ class Controller {
         }
     }
 
-    public function saveArticle($values){
-        $rslt = $this->model->UpdateArticle($values);
-        // if($_REQUEST["title"] != $articleInfo["Titre"] && $_REQUEST["commentaire"] != $articleInfo["Commentaire"] && $_FILES["fileToUpload"] != $articleInfo["Filename"]){
-        //     echo "yes";
-        // }
-        var_dump($rslt);
-        if($rslt){
-            echo "'article a bien été modifié, vous allez être redirigé";
-            header("Location: index.php?action=viewListArticlesByUser&id=". $_SESSION["userId"] ."");
-        } else {
-            echo "La mise à jour de l'article n'a pas fonctionné";
-        }
-    }
 
     public function post() {
         $post = getPost($_GET['id']);

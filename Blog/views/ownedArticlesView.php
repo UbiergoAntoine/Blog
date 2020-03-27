@@ -1,11 +1,13 @@
-<?php $title = 'Mon blog';?>
+<?php $title = 'Mes articles';?>
 
 <?php ob_start(); ?>
 <h1>Liste de mes articles</h1>
+<div class="navbar">
+    <a href="index.php">Liste de tous les articles auteurs confondu</a>
+    <a href="index.php?action=createArticle">Créer un article</a>
+    <a href="?action=logout">Se déconnecter</a>
+</div>
 
-<a href="index.php">Se déconnecter</a>
-<a href="index.php">Liste de tous les articles auteurs confondu</a>
-<a href="index.php?action=createArticle">Créer un article</a>
 
 <hr>
 <h3>Bienvenue <?php echo $blogController->userInfo["Nom"]  . " " . $blogController->userInfo["Prenom"] ?></h3>
