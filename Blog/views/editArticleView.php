@@ -1,5 +1,4 @@
-<?php $title = 'Mon blog';
-var_dump($articleInfo);?>
+<?php $title = 'Mon blog';?>
 
 <?php ob_start(); ?>
 <h1>Editer l'article <?= $articleInfo['Titre'] ?></h1>
@@ -8,12 +7,12 @@ var_dump($articleInfo);?>
 <a href="index.php">Liste des articles de tous auteurs</a>
 
     <form style="padding-top:50px" method="POST" action="" enctype="multipart/form-data">
-        <label>Titre: </label><input type="text" name="title" value="<?= $articleInfo['Titre'] ?>" /><br>
+        <label>Titre: </label><input type="text" name="title" value="<?= $articleInfo['Titre'] ?>" required/><br>
         <label for="commentaire">Commentaire</label><br>
         <textarea id="commentaire" name="commentaire"
-          rows="5" cols="33"><?= $articleInfo['Commentaire'] ?></textarea>
+          rows="5" cols="33" required><?= $articleInfo['Commentaire']?></textarea>
         <p>Choisissez une photo avec une taille inférieure à 2Mo.</p>
-        <input type="file" id="fileToUpload" name="fileToUpload"accept="image/png, image/jpeg" value="Parcourir..." /><br><br>
+        <input type="file" id="fileToUpload" name="fileToUpload"accept="image/png, image/jpeg" value="Parcourir..." required/><br><br>
         <button type="submit" name="submit">Envoyer</button>
     </form>
 

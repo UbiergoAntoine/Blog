@@ -97,13 +97,14 @@ class Model {
         $result = "";
         $conn =  $this->getConnection();
 
-        $sql = "UPDATE galerie SET filename = '?', commentaire = '?', titre = '?'";
+        $sql = "UPDATE article SET Filename = ?, Commentaire = ?, Titre = ? WHERE Id = ?";
 
         $stmt = $conn->prepare($sql);
 
         $stmt -> bindParam(1, $data[0], PDO::PARAM_STR);
         $stmt -> bindParam(2, $data[1], PDO::PARAM_STR);
         $stmt -> bindParam(3, $data[2], PDO::PARAM_STR);
+        $stmt -> bindParam(4, $data[3], PDO::PARAM_STR);
 
         if($stmt -> execute()){
             return true;
