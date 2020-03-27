@@ -14,7 +14,7 @@ class Model {
             die('Erreur : '.$e->getMessage());
         }
     }
-    
+
     public function getLogin($login, $pass){
         $user = "";
         $_SESSION["userVerified"] = false;
@@ -34,7 +34,7 @@ class Model {
         return -999;
     }
 
-    public function getUserInfo($id_user)  
+    public function getUserInfo($id_user)
     {
         $conn = $this->getConnection();
         $sql = 'SELECT * FROM personne WHERE Id = ?';
@@ -72,19 +72,39 @@ class Model {
         return $response;
 
     }
-  
+
     function InsertImage($fileName, $commentaire, $title) {
         $result = "";
         $conn =  $this->getConnection();
-            
+
         $sql = "INSERT INTO galerie (filename, commentaire, titre) VALUES (?, ?, ?)";
-    
+
         $stmt = $conn->prepare($sql);
-        
+
         $stmt -> bindParam(1, $fileName, PDO::PARAM_STR);
         $stmt -> bindParam(2, $commentaire, PDO::PARAM_STR);
         $stmt -> bindParam(3, $title, PDO::PARAM_STR);
-    
+
+        if($stmt -> execute()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    function UpdateArticle($data) {
+        $result = "";
+        $conn =  $this->getConnection();
+
+        $sql = "UPDATE galerie SET filename = '?', commentaire = '?', titre = '?'";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt -> bindParam(1, $data[0], PDO::PARAM_STR);
+        $stmt -> bindParam(2, $data[1], PDO::PARAM_STR);
+        $stmt -> bindParam(3, $data[2], PDO::PARAM_STR);
+
         if($stmt -> execute()){
             return true;
         }
@@ -116,7 +136,7 @@ class Model {
     public function getArticle($postId)
     {
         $conn = $this->getConnection();
-        $sql = ('SELECT * FROM article WHERE id = ?');
+        $sql = 'SELECT * FROM article WHERE id = ?';
         $stmt = $conn->prepare($sql);
         $stmt->execute(array($postId));
 

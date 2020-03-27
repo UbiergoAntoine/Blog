@@ -2,8 +2,6 @@
 if(isset($_GET['url'])){
     $url = explode("/",$_GET['url']);
 }
-// if(isset($reslt)){
-//     if($user["response"] == "OK"){
 var_dump($_SESSION["userVerified"]);
 if(isset($reslt) && $reslt != false && $reslt["response"] == "OK" && $_SESSION["userVerified"] == true) {
 var_dump($_SESSION["userVerified"]);
@@ -72,48 +70,5 @@ var_dump($_SESSION["userVerified"]);
         unset($_GET['action']);
     }
 }
-
-?>
-
-<?php
-// session_start();
-// if(isset($_POST["login"]) && isset($_POST["password"])) {
-//     $result = "";
-//     $conn = "";
-//     try{
-//         $conn = new PDO("mysql:host=localhost;dbname=master_eil", "root", "");
-//         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//         $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-//     }catch(PDOException $exception){
-//         error_log("Connection error: " . $exception->getMessage());
-//     }
-
-//     $sql = "SELECT * FROM Personne WHERE Email = ? AND MotDePasse = ?";
-
-//     $stmt = $conn->prepare($sql);
-
-//     $stmt -> bindParam(1, $_POST["login"], PDO::PARAM_STR);
-//     $stmt -> bindParam(2, md5($_POST["password"]), PDO::PARAM_STR);
-
-//     $stmt -> execute();
-
-//     if($stmt->rowCount() > 0){
-//         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//     }
-//     else{
-
-//         $result = false;
-
-//     }
-//     if($result != false){
-//         $_SESSION["auth"] = $result;
-//     } else {
-//         $_SESSION["auth"] = null;
-//     }
-
-//     if($_SESSION["auth"] != null){
-//         header('Location: formulaire.php');
-//     }
-// }
 
 ?>

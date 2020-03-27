@@ -8,7 +8,7 @@ class Controller {
     public function __construct() {
         $this->model = new Model();
     }
-    
+
     public function invoke($login, $pass){
         $this->userVerified = $this->model->getLogin($login,$pass);
         if(isset($this->userVerified) && $this->userVerified != false && $this->userVerified["response"] == "OK") {
@@ -31,6 +31,21 @@ class Controller {
         $blogController = new Blog();
         $ownArticles = $this->model->getArticleByUser($this->userInfo["Id"]);
         require('./views/ownedArticlesView.php');
+    }
+
+    public function editArticle($idArticle) {
+        $blogController = new Blog();
+        $articleInfo = $this->model->getArticle($idArticle);
+        require('./views/editArticleView.php');
+    }
+
+    public function saveArticle($values){
+        $rslt = $this->model->UpdateArticle($values);
+        if($rslt){
+            echo "L'article a bien été modifié";
+            sleep(5);
+            header("Location : index.php");
+        }
     }
 
     public function post() {
@@ -65,16 +80,14 @@ class Controller {
         return $pageURL;
     }
 
-    function addArticle($filename, $comm, $titre, $id_user) {
-        $affectedLines = InsertImage($filename, $comm, $titre, $id_user);
-        if ($affectedLines === false) {
-            die('Impossible d\'ajouter l\'article !');
+    function generateChar($longueur){
+        $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $longueurMax = strlen($caracteres);
+        $chaineAleatoire = '';
+        for ($i = 0; $i < $longueur; $i++)
+        {
+        $chaineAleatoire .= $caracteres[rand(0, $longueurMax - 1)];
         }
-        else {
-            header('Location: index.php?action=post&id=' . $postId);
-        }
+        return $chaineAleatoire;
     }
-
-
-
 }

@@ -1,7 +1,7 @@
 <?php $title = 'Mon blog'; ?>
 
 <?php ob_start(); ?>
-<h1>Liste de tous les articles auteurs confondu</h1>
+<h1>Liste des articles de tous auteurs</h1>
 <a href="?action=logout">Se déconnecter</a>
 <a href="?action=viewListArticlesByUser&id=<?= $blogController->userInfo["Id"] ?>">Liste de mes articles</a>
 <hr>

@@ -1,11 +1,10 @@
 <?php
-require('./models/blog.php');
 class Blog {
     public $model;
     public $userInfo;
 
     public function __construct() {
-        $this->model = new BlogModel();
+        $this->model = new Model();
         if(isset($_SESSION["userId"])){
             $this->userInfo = $this->model->getUserInfo($_SESSION["userId"]);
         }
@@ -14,7 +13,7 @@ class Blog {
     function addArticle($filename, $comm, $titre)
     {
         $affectedLines = InsertImage($filename, $comm, $titre);
-    
+
         if ($affectedLines === false) {
             die('Impossible d\'ajouter l\'article !');
         }
@@ -22,7 +21,7 @@ class Blog {
             header('Location: index.php?action=post&id=' . $postId);
         }
     }
-    
+
     public function listPosts()
     {
         $posts = $this->model->getArticles();
@@ -37,11 +36,11 @@ class Blog {
     public function post()
     {
         $article = getArticle($_GET['id']);
-    
+
         require('articleView.php');
     }
 
-   
-    
+
+
 
 }

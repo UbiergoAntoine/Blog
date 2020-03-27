@@ -27,10 +27,10 @@ class User{
 
         $stmt->execute();
 
-        if($stmt->rowCount() == 1){
+        if($stmt->rowCount() == 1) {
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        else{
+        else {
             $response['response'] = 'KO';
         }
 
