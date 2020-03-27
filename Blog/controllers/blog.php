@@ -10,18 +10,6 @@ class Blog {
         }
     }
 
-    function addArticle($filename, $comm, $titre)
-    {
-        $affectedLines = InsertImage($filename, $comm, $titre);
-
-        if ($affectedLines === false) {
-            die('Impossible d\'ajouter l\'article !');
-        }
-        else {
-            header('Location: index.php?action=post&id=' . $postId);
-        }
-    }
-
     public function listPosts()
     {
         $posts = $this->model->getArticles();

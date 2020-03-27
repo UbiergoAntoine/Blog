@@ -73,7 +73,7 @@ class Model {
 
     }
 
-    function InsertImage($fileName, $commentaire, $title) {
+    public function InsertImage($fileName, $commentaire, $title) {
         $result = "";
         $conn =  $this->getConnection();
 
@@ -93,7 +93,7 @@ class Model {
         }
     }
 
-    function UpdateArticle($data) {
+    public function UpdateArticle($data) {
         $result = "";
         $conn =  $this->getConnection();
 

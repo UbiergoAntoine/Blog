@@ -2,19 +2,15 @@
 require('controllers/controller.php');
 require('controllers/blog.php');
 
-$request = $_SERVER['REQUEST_URI'];
 $controllers = new Controller();
-$pathProject = "/AFIP/Blog/Blog";
+//si l'utilisateur est connecté 
 if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
     if(isset($_SESSION["userId"])){
         $blogController = new Blog();
     }
+    //si $_GET['action'] existe, switch case avec toutes les routes créés
     if (isset($_GET['action'])) {
         switch($_GET['action']){
-            case "listPosts":
-                listPosts();
-                unset($_GET["action"]);
-            break;
             case "login":
                 include './views/indexView.php';
                 unset($_GET);
@@ -35,14 +31,6 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
                 unset($_GET["action"]);
                 header('Location: index.php');
             break;
-            case "post":
-                if (isset($_GET['id']) && $_GET['id'] > 0) {
-                    post();
-                }
-                else {
-                    echo 'Erreur : aucun identifiant de billet envoyé';
-                }
-            break;
             case "viewListArticlesByUser":
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
                     include './views/ownedArticlesView.php';
@@ -51,43 +39,30 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
             case "editArticle":
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
                     $controllers->editArticle($_GET["id"]);
+                    // Validation user edition article
                     if(isset($_POST["submit"]) && isset($_REQUEST)){
                         if(isset($_REQUEST["title"]) && isset($_REQUEST["commentaire"])) {
                             if($_FILES["fileToUpload"]["name"] != ""){
-                                $target_dir = "./photos/";
-                                $target_file = $target_dir . $controllers->generateChar(5). "_" . basename($_FILES["fileToUpload"]["name"]);
-                                $uploadOk = 1;
-                                if ($_FILES["fileToUpload"]["size"] > 200000) {
-                                    echo "Désolé l'image est supérieure à 2Mo !";
-                                    $uploadOk = 0;
-                                } else {
-                                    $uploadOk = 1;
-                                }
                                 $currentValue = $controllers->model->getArticle($_GET["id"]);
                                 $filenameArr = explode("/",$currentValue["Filename"]);
                                 $filenameWithChar = end($filenameArr);
                                 $filenameWithCharArr = explode("_",$filenameWithChar);
                                 $filename = end($filenameWithCharArr);
-    
                                 if($_REQUEST["title"] != $currentValue["Titre"] || $_REQUEST["commentaire"] != $currentValue["Commentaire"] || $_FILES["fileToUpload"]["name"] != $filename){
-    
-                                    if ($uploadOk == 0) {
-                                        echo "Votre fichier ne peut être uploadé.";
-                                    } else {
-                                        echo "\n Aucune erreur dans le transfert du fichier. <br>";
-                                        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                                            $filename = basename( $_FILES["fileToUpload"]["name"]);
-                                            echo "Le fichier ". $filename. " a été copié dans le répertoire photos <br>";
-                                            if($controllers->saveArticle(array($target_file, htmlspecialchars($_POST["commentaire"],ENT_QUOTES), htmlspecialchars($_POST["title"], ENT_QUOTES),$_GET['id']))) {
-                                                echo "Modification du Post réussi ! <br>";
-                                            }
-                                        } else {
-                                            echo "Désolé nous n'avons pas pu transférer votre fichier.";
+                                    
+                                    //upload du fichier et récupération du filename
+                                    if($target_file = $controllers->uploadFile($_FILES["fileToUpload"]["name"])){
+                                        $filename = basename( $_FILES["fileToUpload"]["name"]);
+                                        echo "Le fichier ". $filename. " a été copié dans le répertoire photos <br>";
+                                        //Modification de l'article dans bdd
+                                        if($controllers->saveArticle(array($target_file, htmlspecialchars($_POST["commentaire"],ENT_QUOTES), htmlspecialchars($_POST["title"], ENT_QUOTES),$_GET['id']))) {
+                                            echo "Modification du Post réussi ! <br>";
                                         }
+                                    } else {
+                                        echo "Désolé nous n'avons pas pu transférer votre fichier.";
                                     }
-                                } else {
-                                    echo "Aucun champs n'a été modifié, veuillez changer un des champs.";
                                 }
+                            //si aucun fichier n'est selectionné modification du commentaire et titre avec l'ancienne image
                             } else {
                                 $currentValue = $controllers->model->getArticle($_GET["id"]);
                                 if($controllers->saveArticle(array($currentValue["Filename"], htmlspecialchars($_POST["commentaire"],ENT_QUOTES), htmlspecialchars($_POST["title"], ENT_QUOTES),$_GET['id']))) {
@@ -122,28 +97,16 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
                 // Validation user create article
                 if(isset($_POST["submit"]) && isset($_REQUEST)){
                     if(isset($_REQUEST["title"]) || isset($_REQUEST["commentaire"]) || isset($_FILES["fileToUpload"]["name"])){
-                        $target_dir = "./photos/";
-                        $target_file = $target_dir . $controllers->generateChar(5). "_" . basename($_FILES["fileToUpload"]["name"]);
-                        $uploadOk = 1;
-                        if ($_FILES["fileToUpload"]["size"] > 200000) {
-                            echo "Désolé l'image est supérieure à 2Mo !";
-                            $uploadOk = 0;
-                        } else {
-                            $uploadOk = 1;
-                        }
-                        if ($uploadOk == 0) {
-                            echo "Votre fichier ne peut être uploadé.";
-                        } else {
-                            echo "\n Aucune erreur dans le transfert du fichier. <br>";
-                            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                                $filename = basename( $_FILES["fileToUpload"]["name"]);
-                                echo "Le fichier ". $filename. " a été copié dans le répertoire photos <br>";
-                                if($controllers->saveNewArticle(array($_REQUEST["title"], $_REQUEST["commentaire"], $target_file, $_SESSION["userId"]))) {
-                                    echo "Ajout du Post réussi ! <br>";
-                                }
-                            } else {
-                                echo "Désolé nous n'avons pas pu transférer votre fichier.";
+                        //upload du fichier et récupération du filename
+                        if($target_file = $controllers->uploadFile($_FILES["fileToUpload"]["name"])){
+                            $filename = basename( $_FILES["fileToUpload"]["name"]);
+                            echo "Le fichier ". $filename. " a été copié dans le répertoire photos <br>";
+                            //enregistrement du nouvel article dans bdd
+                            if($controllers->saveNewArticle(array($_REQUEST["title"], $_REQUEST["commentaire"], $target_file, $_SESSION["userId"]))) {
+                                echo "Ajout du Post réussi ! <br>";
                             }
+                        } else {
+                            echo "Désolé nous n'avons pas pu transférer votre fichier.";
                         }
                     }
 

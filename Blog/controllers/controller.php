@@ -87,7 +87,7 @@ class Controller {
         require('postView.php');
     }
 
-    function getUrlCurrently($filter = array()) {
+    public function getUrlCurrently($filter = array()) {
         $pageURL = isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on" ? "https://" : "http://";
 
         $pageURL .= $_SERVER["SERVER_NAME"];
@@ -112,7 +112,29 @@ class Controller {
         return $pageURL;
     }
 
-    function generateChar($longueur){
+    public function uploadFile($filename){
+        $target_dir = "./photos/";
+        $target_file = $target_dir . $this->generateChar(5). "_" . basename($filename);
+        $uploadOk = 1;
+        if ($_FILES["fileToUpload"]["size"] > 200000) {
+            echo "Désolé l'image est supérieure à 2Mo !";
+            $uploadOk = 0;
+        } else {
+            $uploadOk = 1;
+        }
+        if ($uploadOk == 0) {
+            return false;
+        } else {
+            echo "\n Aucune erreur dans le transfert du fichier. <br>";
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+               return $target_file;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public function generateChar($longueur){
         $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longueurMax = strlen($caracteres);
         $chaineAleatoire = '';
