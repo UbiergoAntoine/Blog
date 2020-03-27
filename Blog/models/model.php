@@ -27,7 +27,7 @@ class Model {
             $_SESSION["userVerified"] = true;
             return $newUser;
         } else{
-            echo "Le mot de passe est inccorect";
+            echo "<p style='padding:5px;text-align:center'>Le mot de passe est inccorect<p>";
             $_SESSION["userVerified"] = false;
             return false;
         }

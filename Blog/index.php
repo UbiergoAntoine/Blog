@@ -156,10 +156,12 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
         include './views/indexView.php';
     }
 } else {
-    
     if (isset($_GET['action'])) {
         if($_GET['action'] == "visitor"){
             include './views/indexVisitorView.php';
+        } else {
+            include 'views/loginView.php';
+            unset($_GET['action']);
         }
     } else {
         if(isset($_REQUEST['login']) and isset($_REQUEST['password']))
