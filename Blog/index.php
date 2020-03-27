@@ -118,30 +118,30 @@ if(isset($_SESSION["userVerified"]) && $_SESSION["userVerified"] == true) {
                     echo 'Erreur : aucun identifiant de post envoyé';
                 }
             break;
-            // case "createArticle":
-            //     if (isset($_GET['id']) && $_GET['id'] > 0) {
-            //         if (!empty($_POST['author']) && !empty($_POST['comment'])) {
-            //             addArticle($_GET['id'], $_POST['author'], $_POST['comment']);
-            //         }
-            //         else {
-            //             echo 'Erreur : tous les champs ne sont pas remplis !';
-            //         }
-            //     }
-            //     else {
-            //         echo 'Erreur : aucun identifiant de billet envoyé';
-            //     }
-            // break;
-            case "saveArticle":
-                if (isset($_GET['id']) && $_GET['id'] > 0) {
-                    if (!empty($_POST['author']) && !empty($_POST['comment'])) {
-                        addArticle($_GET['id'], $_POST['author'], $_POST['comment']);
+            case "createArticle":
+                $controllers->createArticle();
+                // Validation user create article
+                if(isset($_POST["submit"]) && isset($_REQUEST)){
+                    if(isset($_REQUEST["title"]) || isset($_REQUEST["commentaire"]) || isset($_FILES["fileToUpload"]["name"])){
+                        $result = $controllers->saveNewArticle(array($_REQUEST["title"], $_REQUEST["commentaire"], $_REQUEST["fileToUpload"]["name"]));
+                        if($result){
+                            $target_dir = "./photos/";
+                            $target_file = $target_dir . $controllers->generateChar(5). "_" . basename($_FILES["fileToUpload"]["name"]);
+                            $uploadOk = 1;
+                            if ($_FILES["fileToUpload"]["size"] > 200000) {
+                                echo "Désolé l'image est supérieure à 2Mo !";
+                                $uploadOk = 0;
+                            } else {
+                                $uploadOk = 1;
+                            }
+                            $currentValue = $controllers->model->getArticle($_GET["id"]);
+                            $filenameArr = explode("/",$currentValue["Filename"]);
+                            $filenameWithChar = end($filenameArr);
+                            $filenameWithCharArr = explode("_",$filenameWithChar);
+                            $filename = end($filenameWithCharArr);
+                        }
+
                     }
-                    else {
-                        echo 'Erreur : tous les champs ne sont pas remplis !';
-                    }
-                }
-                else {
-                    echo 'Erreur : aucun identifiant de billet envoyé';
                 }
             break;
         }

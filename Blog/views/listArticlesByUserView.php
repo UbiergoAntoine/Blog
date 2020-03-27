@@ -19,7 +19,7 @@ if ($ownArticles) {foreach ($ownArticles as $key => $value)
 }}else{
 ?>
     <p>Aucun article rédigé par vous. Veuillez cliquer sur
-    <a href="index.php?action=createArticle">créer un article</a></p>
+    <a href="index.php?action=createArticle"> créer un article</a></p>
 
 <?php
 }

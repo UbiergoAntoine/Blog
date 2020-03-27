@@ -39,6 +39,9 @@ class Controller {
         require('./views/editArticleView.php');
     }
 
+    public function createArticle() {
+        require('./views/createArticleView.php');
+    }
     public function confirmDeletePost($idArticle) {
         $articleInfo = $this->model->getArticle($idArticle);
         require('./views/confirmDeleteView.php');
